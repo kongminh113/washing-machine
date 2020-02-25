@@ -24,7 +24,10 @@ var time8_status = 0
 var time9_status = 0
 var time10_status = 0
 
-try {
+setInterval(update_state(),1000)
+
+function update_state() {
+    try {
     (async () => {
       const browser = await puppeteer.launch({ args: ['--no-sandbox'] })
       const page = await browser.newPage()
@@ -83,6 +86,7 @@ try {
   } catch (err) {
     console.error(err)
   }
+}
 
   app.get('/', function (req, res) {
     let json = {"result":
