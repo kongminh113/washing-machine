@@ -15,6 +15,7 @@ try {
         let time = document.querySelector('#tbl-body-operational-status tr:nth-child(3) td:nth-child(3)').textContent
         return time
     })
+        console.log("1: ",data)
         washing_machine_3_status = data
         await browser.close()
       
@@ -27,6 +28,7 @@ try {
     let json = {"result":washing_machine_3_status, "count":42}
     return res.send(json);
    });
-  
+console.log("port: ",process.env.PORT || 5000)
 app.listen(process.env.PORT || 5000);
+
 
