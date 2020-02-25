@@ -29,7 +29,7 @@ try {
     let json = {"result":washing_machine_3_status, "count":42}
     return res.send(json);
    });
-logger.info("port: ",process.env.PORT || 5000)
+
 app.listen(process.env.PORT || 5000);
 
 
