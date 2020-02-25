@@ -24,7 +24,7 @@ var time8_status = 0
 var time9_status = 0
 var time10_status = 0
 
-setInterval(update_state(),1000)
+setInterval(() => (update_state()),1000)
 
 function update_state() {
     try {
