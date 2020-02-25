@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const fetch = require("node-fetch");
 const puppeteer = require('puppeteer')
-const logger = require('heroku-logger')
 
 var washing_machine_3_status = "Loading"
 try {
@@ -13,11 +12,12 @@ try {
       await page.goto('https://www.coin-laundry.co.jp/userp/shop_detail/11000758', { waitUntil: 'networkidle2' })
     
     let data =  await page.evaluate(() => {
-        let time = document.querySelector('#tbl-body-operational-status tr:nth-child(3) td:nth-child(3)').textContent
-        return time
+        let data1 = document.querySelector('#tbl-body-operational-status tr:nth-child(3) td:nth-child(3)').textContent
+        let data2 = document.querySelector('#tbl-body-operational-status tr:nth-child(3) td:nth-child(3)').textContent
+        let data3 = document.querySelector('#tbl-body-operational-status tr:nth-child(3) td:nth-child(3)').textContent
+        return {data1 , data2, data3}
     })
-        logger.info("1: ",data)
-        washing_machine_3_status = data
+        washing_machine_3_status = data.data1
         await browser.close()
       
     })()
