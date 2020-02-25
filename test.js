@@ -7,7 +7,7 @@ const logger = require('heroku-logger')
 var washing_machine_3_status = "Loading"
 try {
     (async () => {
-      const browser = await puppeteer.launch()
+      const browser = await puppeteer.launch({ args: ['--no-sandbox'] })
       const page = await browser.newPage()
       await page.setViewport({ width: 1280, height: 800 })
       await page.goto('https://www.coin-laundry.co.jp/userp/shop_detail/11000758', { waitUntil: 'networkidle2' })
