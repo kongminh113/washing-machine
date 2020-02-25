@@ -11,7 +11,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start" : "npm install node-fetch && npm install puppeteer && npm install heroku-logger && node test.js",
+    "start" : "node test.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
