@@ -23,19 +23,11 @@ var time7_status = 0
 var time8_status = 0
 var time9_status = 0
 var time10_status = 0
+var data
+var page
 
-setInterval(() => (update_state()),60000)
-
-
-try {
-    (async () => {
-      const browser = await puppeteer.launch({ args: ['--no-sandbox'] })
-      const page = await browser.newPage()
-      await page.setViewport({ width: 1280, height: 800 })
-      await page.goto('https://www.coin-laundry.co.jp/userp/shop_detail/11000758', { waitUntil: 'networkidle2' })
-      update_state()
-  async function update_state(){
-    let data =  await page.evaluate(() => {
+async function update_state(){
+    data =  await page.evaluate(() => {
         let data1 = document.querySelector('#tbl-body-operational-status tr:nth-child(1) td:nth-child(3)').textContent
         let data2 = document.querySelector('#tbl-body-operational-status tr:nth-child(2) td:nth-child(3)').textContent
         let data3 = document.querySelector('#tbl-body-operational-status tr:nth-child(3) td:nth-child(3)').textContent
@@ -60,28 +52,38 @@ try {
         return {data1 , data2, data3, data4, data5, data6, data7, data8, data9, data10, time1, time2, time3, time4, time5, time6, time7, time8, time9, time10}
     })
     }
-        washing_machine_1_status = data.data1
-        washing_machine_2_status = data.data2
-        washing_machine_3_status = data.data3
-        washing_machine_4_status = data.data4
-        washing_machine_5_status = data.data5
-        washing_machine_6_status = data.data6
-        washing_machine_7_status = data.data7
-        washing_machine_8_status = data.data8
-        washing_machine_9_status = data.data9
-        washing_machine_10_status = data.data10
+
+try {
+    (async () => {
+      const browser = await puppeteer.launch({ args: ['--no-sandbox'] })
+      page = await browser.newPage()
+      await page.setViewport({ width: 1280, height: 800 })
+      await page.goto('https://www.coin-laundry.co.jp/userp/shop_detail/11000758', { waitUntil: 'networkidle2' })
+      await update_state()
+      if ( data != undefined){
+
+      washing_machine_1_status = data.data1
+      washing_machine_2_status = data.data2
+      washing_machine_3_status = data.data3
+      washing_machine_4_status = data.data4
+      washing_machine_5_status = data.data5
+      washing_machine_6_status = data.data6
+      washing_machine_7_status = data.data7
+      washing_machine_8_status = data.data8
+      washing_machine_9_status = data.data9
+      washing_machine_10_status = data.data10
         
-        time1_status = data.time1
-        time2_status = data.time2
-        time3_status = data.time3
-        time4_status = data.time4
-        time5_status = data.time5
-        time6_status = data.time6
-        time7_status = data.time7
-        time8_status = data.time8
-        time9_status = data.time9
-        time10_status = data.time10
-        
+      time1_status = data.time1
+      time2_status = data.time2
+      time3_status = data.time3
+      time4_status = data.time4
+      time5_status = data.time5
+      time6_status = data.time6
+      time7_status = data.time7
+      time8_status = data.time8
+      time9_status = data.time9
+      time10_status = data.time10
+      }
         //await browser.close()
       
     })()
@@ -89,7 +91,7 @@ try {
     console.error(err)
   }
 
-
+  setInterval(() => (update_state()),60000)
   app.get('/', function (req, res) {
     let json = {"result":
                 { "result1":washing_machine_1_status,"result2":washing_machine_2_status,"result3":washing_machine_3_status,"result4":washing_machine_4_status,"result5":washing_machine_5_status,"result6":washing_machine_6_status,"result7":washing_machine_7_status,"result8":washing_machine_8_status,"result9":washing_machine_9_status,"result10":washing_machine_10_status},
