@@ -95,7 +95,7 @@ try {
                 { "result1":washing_machine_1_status,"result2":washing_machine_2_status,"result3":washing_machine_3_status,"result4":washing_machine_4_status,"result5":washing_machine_5_status,"result6":washing_machine_6_status,"result7":washing_machine_7_status,"result8":washing_machine_8_status,"result9":washing_machine_9_status,"result10":washing_machine_10_status},
                 "time":
                 { "time1":time1_status, "time2":time2_status, "time3":time3_status, "time4":time4_status, "time5":time5_status, "time6":time6_status, "time7":time7_status, "time8":time8_status, "time9":time9_status, "time10":time10_status }}
-    return res.send(json);
+    return res.send(JSON.stringify(json));
    });
 
 app.listen(process.env.PORT || 5000);
