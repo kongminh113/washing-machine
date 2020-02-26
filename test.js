@@ -33,7 +33,7 @@ try {
       const page = await browser.newPage()
       await page.setViewport({ width: 1280, height: 800 })
       await page.goto('https://www.coin-laundry.co.jp/userp/shop_detail/11000758', { waitUntil: 'networkidle2' })
-        
+      update_state()
   async function update_state(){
     let data =  await page.evaluate(() => {
         let data1 = document.querySelector('#tbl-body-operational-status tr:nth-child(1) td:nth-child(3)').textContent
