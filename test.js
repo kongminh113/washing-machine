@@ -24,10 +24,15 @@ var time8_status = 0
 var time9_status = 0
 var time10_status = 0
 var data
-var page
+
 
 async function update_state(){
+    const browser = await puppeteer.launch({ args: ['--no-sandbox'], headless : false })
+    page = await browser.newPage()
+    await page.setViewport({ width: 1280, height: 800 })
     await page.goto('https://www.coin-laundry.co.jp/userp/shop_detail/11000758', { waitUntil: 'networkidle2' })
+    setTimeout(()=>getData(),5000)
+    async function getData(){
     data =  await page.evaluate(() => {
         let data1 = document.querySelector('#tbl-body-operational-status tr:nth-child(1) td:nth-child(3)').textContent
         let data2 = document.querySelector('#tbl-body-operational-status tr:nth-child(2) td:nth-child(3)').textContent
@@ -52,16 +57,7 @@ async function update_state(){
         let time10 = document.querySelector('#tbl-body-operational-status tr:nth-child(10) td:nth-child(4)').textContent
         return {data1 , data2, data3, data4, data5, data6, data7, data8, data9, data10, time1, time2, time3, time4, time5, time6, time7, time8, time9, time10}
     })
-    }
-
-try {
-    (async () => {
-      const browser = await puppeteer.launch({ args: ['--no-sandbox'] })
-      page = await browser.newPage()
-      await page.setViewport({ width: 1280, height: 800 })
-      await page.goto('https://www.coin-laundry.co.jp/userp/shop_detail/11000758', { waitUntil: 'networkidle2' })
-      await update_state()
-      if ( data != undefined){
+        if ( data != undefined){
 
       washing_machine_1_status = data.data1
       washing_machine_2_status = data.data2
@@ -85,6 +81,16 @@ try {
       time9_status = data.time9
       time10_status = data.time10
       }
+      await browser.close()
+    }
+    
+    }
+
+try {
+    (async () => {
+      await update_state()
+      setInterval(() => (update_state()),60000)
+      
         //await browser.close()
       
     })()
@@ -92,7 +98,7 @@ try {
     console.error(err)
   }
 
-  setInterval(() => (update_state()),60000)
+  
   app.get('/', function (req, res) {
     let json = {"result":
                 { "result1":washing_machine_1_status,"result2":washing_machine_2_status,"result3":washing_machine_3_status,"result4":washing_machine_4_status,"result5":washing_machine_5_status,"result6":washing_machine_6_status,"result7":washing_machine_7_status,"result8":washing_machine_8_status,"result9":washing_machine_9_status,"result10":washing_machine_10_status},
