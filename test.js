@@ -27,7 +27,7 @@ var data
 
 
 async function update_state(){
-    const browser = await puppeteer.launch({ args: ['--no-sandbox'], headless : false })
+    const browser = await puppeteer.launch({ args: ['--no-sandbox'] })
     page = await browser.newPage()
     await page.setViewport({ width: 1280, height: 800 })
     await page.goto('https://www.coin-laundry.co.jp/userp/shop_detail/11000758', { waitUntil: 'networkidle2' })
