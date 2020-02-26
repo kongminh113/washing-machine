@@ -27,14 +27,14 @@ var time10_status = 0
 setInterval(() => (update_state()),60000)
 
 
-function update_state(){
-    try {
+try {
     (async () => {
       const browser = await puppeteer.launch({ args: ['--no-sandbox'] })
       const page = await browser.newPage()
       await page.setViewport({ width: 1280, height: 800 })
       await page.goto('https://www.coin-laundry.co.jp/userp/shop_detail/11000758', { waitUntil: 'networkidle2' })
-    
+        
+    function update_state(){
     let data =  await page.evaluate(() => {
         let data1 = document.querySelector('#tbl-body-operational-status tr:nth-child(1) td:nth-child(3)').textContent
         let data2 = document.querySelector('#tbl-body-operational-status tr:nth-child(2) td:nth-child(3)').textContent
@@ -59,6 +59,7 @@ function update_state(){
         let time10 = document.querySelector('#tbl-body-operational-status tr:nth-child(10) td:nth-child(4)').textContent
         return {data1 , data2, data3, data4, data5, data6, data7, data8, data9, data10, time1, time2, time3, time4, time5, time6, time7, time8, time9, time10}
     })
+    }
         washing_machine_1_status = data.data1
         washing_machine_2_status = data.data2
         washing_machine_3_status = data.data3
@@ -81,13 +82,13 @@ function update_state(){
         time9_status = data.time9
         time10_status = data.time10
         
-        await browser.close()
+        //await browser.close()
       
     })()
   } catch (err) {
     console.error(err)
   }
-}
+
 
   app.get('/', function (req, res) {
     let json = {"result":
