@@ -31,7 +31,7 @@ async function update_state(){
     page = await browser.newPage()
     await page.setViewport({ width: 1280, height: 800 })
     await page.goto('https://www.coin-laundry.co.jp/userp/shop_detail/11000758', { waitUntil: 'networkidle2' })
-    setTimeout(()=>getData(),5000)
+    setTimeout(()=>getData(),1500)
     async function getData(){
     data =  await page.evaluate(() => {
         let data1 = document.querySelector('#tbl-body-operational-status tr:nth-child(1) td:nth-child(3)').textContent
